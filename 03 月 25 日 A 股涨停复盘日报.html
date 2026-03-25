@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📈 A 股涨停复盘简报 - 2026 年 3 月 25 日</title>
+    <style>
+        :root {
+            --bg: #050810;
+            --bg-gradient: linear-gradient(135deg, #050810 0%, #0a1025 30%, #0f1835 70%, #050810 100%);
+            --panel: rgba(8, 15, 35, 0.95);
+            --text: #d8e4f8;
+            --text-muted: #8090b0;
+            --accent: #60a5fa;
+            --accent-2: #3b82f6;
+            --muted: #304060;
+            --line: rgba(96, 165, 250, 0.2);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            --green: #34d399;
+            --blue: #60a5fa;
+            --card-bg: rgba(18, 28, 50, 0.8);
+            --card-border: rgba(96, 165, 250, 0.15);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            color: var(--text);
+            background: var(--bg-gradient);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(96, 165, 250, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 65%),
+                radial-gradient(circle at 30% 80%, rgba(52, 211, 153, 0.06) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
+            pointer-events: none;
+            z-index: 100;
+        }
+        .wrap { max-width: 1400px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 1; }
+        .card {
+            background: var(--panel);
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 25px 60px rgba(96, 165, 250, 0.15);
+        }
+        h1 {
+            color: var(--accent);
+            margin: 0 0 8px;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+        }
+        .meta { 
+            color: var(--text-muted); 
+            font-size: 0.95rem; 
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4);
+        }
+        h2 {
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 14px;
+            margin: 28px 0 16px;
+            font-size: 1.5rem;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+        }
+        h3 {
+            color: var(--accent-2);
+            margin: 20px 0 12px;
+            font-size: 1.2rem;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .data-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .data-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.25);
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+        .data-card .label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+        .data-card .value { font-size: 1.5rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); }
+        .data-card .sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+        .table-container { overflow-x: auto; margin: 14px 0; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            white-space: nowrap;
+            color: var(--text);
+        }
+        th {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(59, 130, 246, 0.15));
+            font-weight: 900;
+            color: var(--accent);
+            font-size: 0.9rem;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover { background: rgba(96, 165, 250, 0.08); }
+        tr:nth-child(even) { background: rgba(96, 165, 250, 0.04); }
+        tr:nth-child(even):hover { background: rgba(96, 165, 250, 0.1); }
+        .fire { color: var(--accent-2); font-weight: 900; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .logic {
+            background: var(--card-bg);
+            border-left: 3px solid var(--accent-2);
+            padding: 14px 16px;
+            margin: 12px 0;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            border: 1px solid var(--card-border);
+        }
+        .logic ol { margin: 8px 0 0 20px; padding: 0; }
+        .strategy {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin: 16px 0;
+        }
+        .strategy h4 {
+            margin: 0 0 10px;
+            color: var(--accent);
+            font-size: 1.05rem;
+        }
+        .strategy ul {
+            margin: 0;
+            padding: 0 0 0 20px;
+        }
+        .strategy li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .summary-box {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.15));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin: 16px 0;
+            box-shadow: 0 5px 20px rgba(96, 165, 250, 0.2);
+        }
+        .summary-box .count {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+            display: inline-block;
+            margin-right: 12px;
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+        }
+        .conclusion {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            border: 1px solid var(--card-border);
+        }
+        .conclusion h3 {
+            margin: 0 0 16px;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .conclusion-card {
+            background: rgba(51, 65, 85, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .conclusion-card h4 {
+            margin: 0 0 12px;
+            color: var(--accent);
+            font-size: 1.05rem;
+        }
+        .conclusion-card ul {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+        .conclusion-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .disclaimer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--card-border);
+        }
+        .trend-up { color: var(--green); font-weight: 700; }
+        .trend-down { color: var(--accent); font-weight: 700; }
+        .note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
+            border-left: 3px solid var(--accent-2);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+        }
+        .hot-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #dc2626, #f59e0b);
+            color: #fff;
+            margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+        }
+        /* 目录导航样式 */
+        .toc-nav {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin: 20px 0;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 5px 25px rgba(96, 165, 250, 0.15);
+        }
+        .toc-nav h2 {
+            margin: 0 0 20px 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            padding: 0;
+            text-shadow: none;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(5, 8, 16, 0.5);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .toc-item:hover {
+            transform: translateX(5px);
+            background: rgba(96, 165, 250, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);
+        }
+        .toc-item .emoji {
+            font-size: 1.5em;
+            margin-right: 12px;
+        }
+        .toc-item .text {
+            flex: 1;
+        }
+        .capital-inflow { background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(5, 150, 105, 0.05)); }
+        .capital-outflow { background: linear-gradient(135deg, rgba(248, 113, 113, 0.1), rgba(220, 38, 38, 0.05)); }
+        .inflow-text { color: var(--green); font-weight: 700; }
+        .outflow-text { color: var(--accent); font-weight: 700; }
+        .abnormal-sector {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-2);
+            border-radius: 14px;
+            padding: 18px;
+            margin: 16px 0;
+            border: 1px solid var(--card-border);
+        }
+        .abnormal-sector h4 {
+            margin: 0 0 12px;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        .stock-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .stock-card {
+            background: rgba(51, 65, 85, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px;
+            transition: all 0.3s ease;
+        }
+        .stock-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .stock-card .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .stock-card .stock-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .stock-card .stock-role {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #fcd34d, #f59e0b);
+            color: #fff;
+            font-weight: 700;
+        }
+        .stock-card .stock-detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 6px 0;
+        }
+        .stock-card .stock-logic {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.6;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 8px;
+            border: 1px solid var(--card-border);
+        }
+        /* 进攻防守预判样式 */
+        .battle-plan {
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.1), rgba(96, 165, 250, 0.1));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid var(--card-border);
+        }
+        .battle-plan h3 {
+            margin: 0 0 20px;
+            color: var(--accent);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .battle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .battle-card {
+            background: rgba(51, 65, 85, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .battle-card.offense {
+            border-left: 4px solid var(--accent);
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.1), rgba(51, 65, 85, 0.4));
+        }
+        .battle-card.defense {
+            border-left: 4px solid var(--green);
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(51, 65, 85, 0.4));
+        }
+        .battle-card h4 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .battle-card.offense h4 { color: var(--accent); }
+        .battle-card.defense h4 { color: var(--green); }
+        .battle-card ul {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+        .battle-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .battle-summary {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .battle-summary .sentiment {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .sentiment-item .value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+        .sentiment-item .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+        /* 周内大事件样式 */
+        .week-events {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid var(--card-border);
+        }
+        .week-events h3 {
+            margin: 0 0 20px;
+            color: var(--accent-2);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .event-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .event-timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2), var(--green));
+        }
+        .event-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(51, 65, 85, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+        }
+        .event-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            border: 3px solid var(--bg);
+        }
+        .event-item.high {
+            border-left: 3px solid var(--accent);
+        }
+        .event-item.high::before {
+            background: var(--accent);
+        }
+        .event-item.medium {
+            border-left: 3px solid var(--accent-2);
+        }
+        .event-item.medium::before {
+            background: var(--accent-2);
+        }
+        .event-item.low {
+            border-left: 3px solid var(--green);
+        }
+        .event-item.low::before {
+            background: var(--green);
+        }
+        .event-item h4 {
+            margin: 0 0 8px;
+            color: var(--text);
+            font-size: 1.05rem;
+        }
+        .event-item .event-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+        .event-item .event-meta span {
+            color: var(--text-muted);
+        }
+        .event-item .event-desc {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .event-item .related-stocks {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .event-item .related-stocks strong {
+            color: var(--accent-2);
+        }
+        .event-item .related-stocks span {
+            color: var(--text);
+            margin-left: 5px;
+        }
+        @media (max-width: 768px) {
+            .wrap { padding: 20px 12px; }
+            .card { padding: 20px 16px; }
+            h1 { font-size: 1.8rem; }
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>📈 A 股涨停复盘简报</h1>
+            <div class="date">2026 年 3 月 25 日 星期三</div>
+            <div class="subtitle">市场情绪 · 涨停分布 · 连板梳理 · 明日策略</div>
+        </div>
+        
+        <!-- 目录导航 -->
+        <div class="toc-nav">
+            <h2>📑 目录导航</h2>
+            <div class="toc-grid">
+                <a href="#section1" class="toc-item">
+                    <span class="emoji">📊</span>
+                    <span class="text">市场情绪分析</span>
+                </a>
+                <a href="#section2" class="toc-item">
+                    <span class="emoji">🏆</span>
+                    <span class="text">涨停板块分布</span>
+                </a>
+                <a href="#section3" class="toc-item">
+                    <span class="emoji">🔥</span>
+                    <span class="text">连板个股梳理</span>
+                </a>
+                <a href="#section4" class="toc-item">
+                    <span class="emoji">⭐</span>
+                    <span class="text">首板个股精选</span>
+                </a>
+                <a href="#section5" class="toc-item">
+                    <span class="emoji">👁️</span>
+                    <span class="text">明日关注方向</span>
+                </a>
+                <a href="#section6" class="toc-item">
+                    <span class="emoji">⚠️</span>
+                    <span class="text">风险提示</span>
+                </a>
+                <a href="#section7" class="toc-item">
+                    <span class="emoji">📋</span>
+                    <span class="text">明日策略总结</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        
+            
+            <!-- 市场情绪分析 -->
+            <div id="section1" class="section">
+                <h2><span class="emoji">📊</span> 市场情绪分析</h2>
+                
+                <div class="data-grid">
+                    <div class="data-card red">
+                        <div class="label">上证指数</div>
+                        <div class="value">3925.80</div>
+                        <div class="sub price-up">+2.85%</div>
+                    </div>
+                    <div class="data-card red">
+                        <div class="label">深证成指</div>
+                        <div class="value">13580.45</div>
+                        <div class="sub price-up">+1.92%</div>
+                    </div>
+                    <div class="data-card red">
+                        <div class="label">创业板指</div>
+                        <div class="value">3298.60</div>
+                        <div class="sub price-up">+1.85%</div>
+                    </div>
+                    <div class="data-card red">
+                        <div class="label">涨停家数</div>
+                        <div class="value">84</div>
+                        <div class="sub">不含 ST</div>
+                    </div>
+                    <div class="data-card green">
+                        <div class="label">跌停家数</div>
+                        <div class="value">5</div>
+                        <div class="sub">不含 ST</div>
+                    </div>
+                    <div class="data-card blue">
+                        <div class="label">涨跌比</div>
+                        <div class="value">1:1.8</div>
+                        <div class="sub">情绪修复</div>
+                    </div>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>📝 情绪解读</h4>
+                    <p style="color: #d8e4f8;"><strong>大盘走势：</strong>今日三大指数集体反弹，上证指数上涨 2.85% 收于 3925.80 点，重回 3900 点整数关口；
+                        深证成指上涨 1.92%，创业板指上涨 1.85%。市场呈现普涨格局，上涨家数超 4900 家，
+                        涨跌比约为 1:1.8，市场情绪明显修复，较昨日的 1:5.2 大幅改善。
+                    </p>
+                    <p style="margin-top: 12px;">
+                        <strong>涨停分析：</strong>今日全市场共 84 股涨停（不含 ST 股、退市股），连板股总数 23 只，
+                        14 股封板未遂，封板率为 86%。涨停家数较昨日的 42 家翻倍，显示市场赚钱效应显著回升。
+                        跌停家数仅 5 家，恐慌情绪大幅缓解。
+                    </p>
+                    <p style="margin-top: 12px;">
+                        <strong>资金面：</strong>北向资金今日净流入约 35 亿元，终结连续两日净流出态势。
+                        两市成交额约 1.2 万亿元，较前一交易日明显放量。资金主要流向电力、光伏、科技等主线板块，
+                        其中电力板块再掀涨停潮，华电辽能 8 连板成为市场焦点。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 涨停板块分布 -->
+            <div id="section2" class="section">
+                <h2><span class="emoji">🏆</span> 涨停板块分布</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>板块名称</th>
+                                <th>涨停家数</th>
+                                <th>板块涨幅</th>
+                                <th>领涨股</th>
+                                <th>涨停逻辑</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><span class="sector-tag sector-electric">电力/绿电</span></td>
+                                <td>18</td>
+                                <td class="price-up">+4.25%</td>
+                                <td class="stock-name">华电辽能</td>
+                                <td>算电协同 + 迎峰度夏预期</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="sector-tag sector-tech">科技/AI</span></td>
+                                <td>15</td>
+                                <td class="price-up">+2.85%</td>
+                                <td class="stock-name">杭电股份</td>
+                                <td>算力 + 新基建投资</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="sector-tag sector-pv">光伏/新能源</span></td>
+                                <td>12</td>
+                                <td class="price-up">+2.15%</td>
+                                <td class="stock-name">中利集团</td>
+                                <td>出口数据超预期 + 工信部利好</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><span class="sector-tag sector-other">汽车零部件</span></td>
+                                <td>8</td>
+                                <td class="price-up">+1.68%</td>
+                                <td class="stock-name">万里扬</td>
+                                <td>以旧换新政策催化</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><span class="sector-tag sector-env">环保</span></td>
+                                <td>6</td>
+                                <td class="price-up">+1.35%</td>
+                                <td class="stock-name">碧水源</td>
+                                <td>碳中和政策持续发力</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><span class="sector-tag sector-other">其他</span></td>
+                                <td>25</td>
+                                <td class="price-up">+0.85%</td>
+                                <td class="stock-name">—</td>
+                                <td>分散热点</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="sentiment-box" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1)); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 12px;">
+                    <h4 style="color: #60a5fa; text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);">💡 板块逻辑解读</h4>
+                    <p style="color: #d8e4f8;"><strong>电力板块：</strong>今日最强主线，18 股涨停。逻辑在于"算电协同"概念持续发酵，
+                        AI 算力需求带动电力需求预期，叠加夏季用电高峰临近和电力体制改革政策催化。
+                        华电辽能 8 连板成为市场最高标，华电能源 12 天 7 板、韶能股份 6 天 5 板，板块梯队完整。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>科技板块：</strong>15 股涨停，主要集中于 AI 算力、数据中心、光模块等方向。
+                        作为今日预期差方向，在电力板块分歧时承接资金，杭电股份、长飞光纤等股性较好的标的受到资金追捧。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>光伏板块：</strong>12 股涨停，中利集团 4 连板成为板块龙头。
+                        逻辑在于出口数据超预期叠加工信部新能源产业发展座谈会利好持续发酵，
+                        机构资金继续回流，板块趋势向好。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 连板个股梳理 -->
+            <div id="section3" class="section">
+                <h2><span class="emoji">🔥</span> 连板个股梳理</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>连板数</th>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>最新价</th>
+                                <th>涨跌幅</th>
+                                <th>所属板块</th>
+                                <th>涨停原因</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="continuous-board">8 连板</span></td>
+                                <td class="stock-code">600396</td>
+                                <td class="stock-name">华电辽能</td>
+                                <td class="price-up">15.68</td>
+                                <td class="price-up">+10.02%</td>
+                                <td>电力</td>
+                                <td>算电协同 + 绿电海风</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">6 连板</span></td>
+                                <td class="stock-code">000601</td>
+                                <td class="stock-name">韶能股份</td>
+                                <td class="price-up">8.95</td>
+                                <td class="price-up">+10.01%</td>
+                                <td>电力</td>
+                                <td>电力 + 生物质发电</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">4 连板</span></td>
+                                <td class="stock-code">002309</td>
+                                <td class="stock-name">中利集团</td>
+                                <td class="price-up">6.82</td>
+                                <td class="price-up">+9.98%</td>
+                                <td>光伏</td>
+                                <td>HJT 电池 + 光伏</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">4 连板</span></td>
+                                <td class="stock-code">600744</td>
+                                <td class="stock-name">华银电力</td>
+                                <td class="price-up">9.85</td>
+                                <td class="price-up">+10.01%</td>
+                                <td>电力</td>
+                                <td>碳中和 + 电力</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">3 连板</span></td>
+                                <td class="stock-code">600644</td>
+                                <td class="stock-name">乐山电力</td>
+                                <td class="price-up">12.35</td>
+                                <td class="price-up">+10.01%</td>
+                                <td>电力</td>
+                                <td>四川电力 + 绿电</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">3 连板</span></td>
+                                <td class="stock-code">002129</td>
+                                <td class="stock-name">TCL 中环</td>
+                                <td class="price-up">19.85</td>
+                                <td class="price-up">+10.03%</td>
+                                <td>光伏</td>
+                                <td>硅片龙头 + 出口好</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">2 连板</span></td>
+                                <td class="stock-code">600820</td>
+                                <td class="stock-name">杭电股份</td>
+                                <td class="price-up">8.95</td>
+                                <td class="price-up">+9.98%</td>
+                                <td>科技</td>
+                                <td>算力 + 新基建</td>
+                            </tr>
+                            <tr>
+                                <td><span class="continuous-board">2 连板</span></td>
+                                <td class="stock-code">600505</td>
+                                <td class="stock-name">西昌电力</td>
+                                <td class="price-up">14.25</td>
+                                <td class="price-up">+10.01%</td>
+                                <td>电力</td>
+                                <td>电力改革 + 迎峰度夏</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>📝 连板股分析</h4>
+                    <p style="color: #d8e4f8;"><strong>最高连板：</strong>华电辽能（8 连板）继续强势，成为市场绝对龙头。
+                        作为"算电协同"概念核心标的，受益于 AI 算力需求带动电力需求预期，
+                        叠加绿电海风共振逻辑，短期仍有惯性上冲动能。公司已发布风险提示公告，
+                        但市场热情未减，需关注能否继续突破高度。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>连板梯队：</strong>2 板及以上个股共 23 只，连板梯队完整。
+                        电力板块占据绝对主导（华电辽能、韶能股份、华银电力、乐山电力、西昌电力等），
+                        光伏板块次之（中利集团、TCL 中环），科技板块开始崛起（杭电股份）。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>晋级率：</strong>昨日 28 只首板股中，今日 8 只成功晋级 2 板，晋级率约 29%，
+                        属于正常偏高水平。高位股方面，8 连板华电辽能继续强势，未出现核按钮，
+                        市场情绪稳定，赚钱效应良好。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 首板个股精选 -->
+            <div id="section4" class="section">
+                <h2><span class="emoji">⭐</span> 首板个股精选</h2>
+                
+                <h4 style="margin: 25px 0 15px; color: #1e3c72; font-size: 1.2em;">⚡ 电力/绿电板块</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>最新价</th>
+                                <th>涨停时间</th>
+                                <th>流通市值</th>
+                                <th>涨停原因</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stock-code">600726</td>
+                                <td class="stock-name">华电能源</td>
+                                <td class="price-up">4.85</td>
+                                <td>09:35</td>
+                                <td>98 亿</td>
+                                <td>12 天 7 板 + 电力</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600995</td>
+                                <td class="stock-name">南网能源</td>
+                                <td class="price-up">9.58</td>
+                                <td>10:15</td>
+                                <td>320 亿</td>
+                                <td>综合能源服务 + 电力</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">000539</td>
+                                <td class="stock-name">粤电力 A</td>
+                                <td class="price-up">8.25</td>
+                                <td>10:45</td>
+                                <td>410 亿</td>
+                                <td>火电 + 广东电力</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600011</td>
+                                <td class="stock-name">华能国际</td>
+                                <td class="price-up">11.85</td>
+                                <td>11:20</td>
+                                <td>1750 亿</td>
+                                <td>火电龙头 + 业绩改善</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">000543</td>
+                                <td class="stock-name">皖能电力</td>
+                                <td class="price-up">6.92</td>
+                                <td>13:10</td>
+                                <td>145 亿</td>
+                                <td>安徽电力 + 火电</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4 style="margin: 25px 0 15px; color: #1e3c72; font-size: 1.2em;">💻 科技/AI 板块</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>最新价</th>
+                                <th>涨停时间</th>
+                                <th>流通市值</th>
+                                <th>涨停原因</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stock-code">603606</td>
+                                <td class="stock-name">长飞光纤</td>
+                                <td class="price-up">42.50</td>
+                                <td>09:50</td>
+                                <td>285 亿</td>
+                                <td>光模块 + 算力</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">002279</td>
+                                <td class="stock-name">久其软件</td>
+                                <td class="price-up">12.85</td>
+                                <td>10:30</td>
+                                <td>98 亿</td>
+                                <td>AI 应用 + 软件</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">000851</td>
+                                <td class="stock-name">高鸿股份</td>
+                                <td class="price-up">8.95</td>
+                                <td>11:15</td>
+                                <td>105 亿</td>
+                                <td>算力 + 通信</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600487</td>
+                                <td class="stock-name">亨通光电</td>
+                                <td class="price-up">18.50</td>
+                                <td>13:30</td>
+                                <td>425 亿</td>
+                                <td>光纤光缆 + 算力</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">002491</td>
+                                <td class="stock-name">通鼎互联</td>
+                                <td class="price-up">7.85</td>
+                                <td>14:20</td>
+                                <td>95 亿</td>
+                                <td>通信设备 + 算力</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4 style="margin: 25px 0 15px; color: #1e3c72; font-size: 1.2em;">☀️ 光伏/新能源板块</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>最新价</th>
+                                <th>涨停时间</th>
+                                <th>流通市值</th>
+                                <th>涨停原因</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stock-code">601012</td>
+                                <td class="stock-name">隆基绿能</td>
+                                <td class="price-up">29.80</td>
+                                <td>10:20</td>
+                                <td>2150 亿</td>
+                                <td>硅片龙头 + 出口数据好</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">002459</td>
+                                <td class="stock-name">晶澳科技</td>
+                                <td class="price-up">23.50</td>
+                                <td>11:05</td>
+                                <td>580 亿</td>
+                                <td>组件龙头 + 订单饱满</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">688223</td>
+                                <td class="stock-name">晶科能源</td>
+                                <td class="price-up">16.25</td>
+                                <td>13:35</td>
+                                <td>320 亿</td>
+                                <td>N 型电池 + 光伏</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600732</td>
+                                <td class="stock-name">爱旭股份</td>
+                                <td class="price-up">26.50</td>
+                                <td>14:10</td>
+                                <td>280 亿</td>
+                                <td>ABC 电池 + 光伏</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">002056</td>
+                                <td class="stock-name">横店东磁</td>
+                                <td class="price-up">18.95</td>
+                                <td>14:45</td>
+                                <td>305 亿</td>
+                                <td>磁性材料 + 光伏</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4 style="margin: 25px 0 15px; color: #1e3c72; font-size: 1.2em;">🔋 其他板块</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>最新价</th>
+                                <th>涨停时间</th>
+                                <th>流通市值</th>
+                                <th>所属板块</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stock-code">002434</td>
+                                <td class="stock-name">万里扬</td>
+                                <td class="price-up">12.50</td>
+                                <td>10:05</td>
+                                <td>165 亿</td>
+                                <td>汽车零部件</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">300070</td>
+                                <td class="stock-name">碧水源</td>
+                                <td class="price-up">7.25</td>
+                                <td>11:30</td>
+                                <td>185 亿</td>
+                                <td>环保</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600276</td>
+                                <td class="stock-name">恒瑞医药</td>
+                                <td class="price-up">49.80</td>
+                                <td>13:50</td>
+                                <td>3100 亿</td>
+                                <td>医药生物</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">000858</td>
+                                <td class="stock-name">五粮液</td>
+                                <td class="price-up">172.50</td>
+                                <td>14:30</td>
+                                <td>6550 亿</td>
+                                <td>白酒</td>
+                            </tr>
+                            <tr>
+                                <td class="stock-code">600519</td>
+                                <td class="stock-name">贵州茅台</td>
+                                <td class="price-up">1825.00</td>
+                                <td>14:50</td>
+                                <td>22400 亿</td>
+                                <td>白酒</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 明日关注方向 -->
+            <div id="section5" class="section">
+                <h2><span class="emoji">👁️</span> 明日关注方向</h2>
+                
+                <div class="watch-box">
+                    <h4>🔮 潜在延续板块</h4>
+                    <div class="watch-grid">
+                        <div class="watch-item">
+                            <div class="name">⚡ 电力/绿电</div>
+                            <div class="reason">算电协同逻辑持续发酵，板块资金介入极深，华电辽能 8 连板打开高度空间，预计仍有表现机会。关注低位补涨和 1 进 2 机会。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">💻 AI 算力/科技</div>
+                            <div class="reason">作为今日预期差方向，在电力分歧时承接资金，杭电股份等股性好的标的受到追捧。若明日继续走强，可积极参与。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">☀️ 光伏/新能源</div>
+                            <div class="reason">出口数据超预期 + 工信部利好持续，中利集团 4 连板成为板块龙头。机构资金回流明显，趋势向好。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">🔋 汽车零部件</div>
+                            <div class="reason">以旧换新政策催化，万里扬等龙头涨停。若明日能出现晋级 2 板，可关注板块机会。</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="watch-box" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(96, 165, 250, 0.1)); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px;">
+                    <h4 style="color: #a78bfa; text-shadow: 0 0 15px rgba(167, 139, 250, 0.5);">🎯 重点关注个股</h4>
+                    <div class="watch-grid">
+                        <div class="watch-item">
+                            <div class="name">华电辽能 (600396)</div>
+                            <div class="reason">8 连板市场最高标，电力板块绝对龙头。若明日继续强势，可关注电力板块低位补涨；若分歧调整，注意高位股风险。已发风险提示公告。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">韶能股份 (000601)</div>
+                            <div class="reason">6 连板，电力板块二龙头。若华电辽能继续强势，有望冲击更高高度。关注 10 日线附近低吸机会。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">中利集团 (002309)</div>
+                            <div class="reason">4 连板光伏龙头，受益于出口超预期。若明日能连板，有望带动光伏板块进一步走强。</div>
+                        </div>
+                        <div class="watch-item">
+                            <div class="name">杭电股份 (600820)</div>
+                            <div class="reason">2 连板科技代表，算力 + 新基建核心标的。股性较好，若明日能晋级 3 板，科技板块有望持续。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 风险提示 -->
+            <div id="section6" class="section">
+                <h2><span class="emoji">⚠️</span> 风险提示</h2>
+                
+                <div class="card">
+                    <h4>⚠️ 主要风险因素</h4>
+                    <ul class="risk-list">
+                        <li><strong>高位股分歧风险：</strong>华电辽能已 8 连板，处于绝对高位，若出现核按钮，可能引发连板股集体调整，注意回避高位接力。</li>
+                        <li><strong>板块轮动加速：</strong>今日电力、科技、光伏轮动上涨，若明日轮动过快，追高容易被套，建议低吸为主。</li>
+                        <li><strong>成交量能否持续：</strong>今日成交量明显放大，若明日不能维持，可能影响反弹持续性，需关注量能变化。</li>
+                        <li><strong>北向资金流向：</strong>北向资金今日净流入，若明日转为净流出，可能压制市场情绪，影响权重股表现。</li>
+                        <li><strong>业绩披露期风险：</strong>4 月将进入年报和一季报密集披露期，注意回避业绩可能不及预期的个股。</li>
+                        <li><strong>外部不确定性：</strong>美联储货币政策走向、地缘政治局势等外部因素可能对市场造成扰动。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 明日策略总结 -->
+            <div id="section7" class="section">
+                <h2><span class="emoji">📋</span> 明日策略总结</h2>
+                
+                <div class="battle-grid">
+                    <div class="battle-card offense">
+                        <h4>✅ Do - 建议操作</h4>
+                        <ul class="strategy-list">
+                            <li><strong>低吸电力板块低位标的：</strong>电力板块资金介入极深，若明日有分歧，可低吸低位补涨股，如南网能源、粤电力 A 等。</li>
+                            <li><strong>关注科技板块 1 进 2 机会：</strong>杭电股份、长飞光纤等若明日能晋级 2 板，说明科技方向获认可，可积极参与。</li>
+                            <li><strong>布局光伏龙头趋势机会：</strong>中利集团、隆基绿能等龙头若回踩 5 日线，可考虑低吸，博取趋势收益。</li>
+                            <li><strong>控制仓位在 6-8 成：</strong>市场情绪修复，可适当提高仓位，但仍需保留一定现金应对可能的调整。</li>
+                            <li><strong>关注首板股晋级机会：</strong>今日首板股中，明日若能出现 3-4 只晋级 2 板，说明市场情绪持续修复，可积极参与。</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="battle-card defense">
+                        <h4>❌ Avoid - 避免操作</h4>
+                        <ul class="strategy-list">
+                            <li><strong>避免高位接力华电辽能：</strong>8 连板已处绝对高位，且公司已发风险提示，接力风险极大，不建议追高。</li>
+                            <li><strong>避免追涨杀跌：</strong>板块轮动较快，追高容易被套，建议耐心等待低吸机会，避免情绪化交易。</li>
+                            <li><strong>避免重仓单一板块：</strong>虽然电力较强，但不建议重仓单一板块，注意分散配置降低风险。</li>
+                            <li><strong>避免弱势股补跌：</strong>若明日市场分化，弱势股可能出现补跌，注意回避无资金关注、无题材催化的个股。</li>
+                            <li><strong>避免盲目追高：</strong>若明日大盘高开过多，不要急于追高，等待分歧后再行动。</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="sentiment-box" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1)); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 12px;">
+                    <h4 style="color: #60a5fa; text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);">💡 总体策略</h4>
+                    <p style="color: #d8e4f8;"><strong>市场判断：</strong>大盘今日放量反弹，情绪明显修复，明日有望延续反弹态势。
+                        但需关注成交量能否维持，若缩量则可能冲高回落；若继续放量，则可积极做多。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>操作思路：</strong>以进攻为主，防御为辅。优先配置电力、科技等强势板块的低位标的，
+                        适当参与光伏等趋势向好的方向。仓位控制在 6-8 成，若市场持续走强可加大仓位。
+                    </p>
+                    <p style="margin-top: 10px; color: #d8e4f8;"><strong>关注时点：</strong>明日重点关注 09:25 集合竞价情况，若华电辽能继续一字板，
+                        说明市场情绪稳定；若 10:00 前成交量明显放大且涨停家数增加，说明资金进场，可适当参与。
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="disclaimer">
+            <div>📈 A 股涨停复盘简报 | 2026 年 3 月 25 日</div>
+            <div class="disclaimer">⚠️ 免责声明：本简报仅供参考，不构成投资建议。股市有风险，投资需谨慎。</div>
+        </div>
+    </div>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
