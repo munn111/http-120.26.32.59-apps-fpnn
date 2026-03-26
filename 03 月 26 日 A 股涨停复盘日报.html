@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 月 26 日 A 股涨停复盘日报</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .header-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .header-meta span {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card-header h2 {
+            font-size: 22px;
+            color: #1e3c72;
+        }
+        
+        .card-header .icon {
+            font-size: 24px;
+        }
+        
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .market-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .market-item .label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .market-item .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .market-item .value.down {
+            color: #e74c3c;
+        }
+        
+        .market-item .value.up {
+            color: #27ae60;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .status-badge.red {
+            background: #fee;
+            color: #e74c3c;
+        }
+        
+        .status-badge.yellow {
+            background: #fff8e1;
+            color: #f39c12;
+        }
+        
+        .status-badge.orange {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+        
+        .status-badge.green {
+            background: #e8f5e9;
+            color: #27ae60;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tr:nth-child(even) {
+            background: #fafbfc;
+        }
+        
+        .highlight-row {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%) !important;
+            font-weight: bold;
+        }
+        
+        .quote-box {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4edda 100%);
+            border-left: 4px solid #27ae60;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-left: 4px solid #f39c12;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 12px 12px 0;
+            color: #7d5a00;
+        }
+        
+        .danger-box {
+            background: linear-gradient(135deg, #fee 0%, #ffcdd2 100%);
+            border-left: 4px solid #e74c3c;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 12px 12px 0;
+            color: #c0392b;
+        }
+        
+        .do-avoid-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .do-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 2px solid #27ae60;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .avoid-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border: 2px solid #e74c3c;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .do-box h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .avoid-box h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .do-box ul, .avoid-box ul {
+            list-style: none;
+        }
+        
+        .do-box li, .avoid-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .do-box li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        .avoid-box li::before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+        }
+        
+        .time-gate-table {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .time-gate-table th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+        
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            padding: 20px;
+            font-size: 13px;
+        }
+        
+        .section-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .section-nav a {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .section-nav a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .do-avoid-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .market-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📈 3 月 26 日 A 股涨停复盘日报</h1>
+            <div class="header-meta">
+                <span>🎯 市场状态：区间防御</span>
+                <span>⚠️ 情绪评分：偏弱</span>
+                <span>💰 成交额：1.96 万亿 (缩量 2359 亿)</span>
+                <span>📅 2026 年 3 月 26 日</span>
+            </div>
+        </div>
+        
+        <!-- Section Navigation -->
+        <div class="section-nav">
+            <a href="#section1">1️⃣ 市场情绪</a>
+            <a href="#section2">2️⃣ 板块分布</a>
+            <a href="#section3">3️⃣ 连板个股</a>
+            <a href="#section4">4️⃣ 首板精选</a>
+            <a href="#section5">5️⃣ 明日关注</a>
+            <a href="#section6">6️⃣ 风险提示</a>
+            <a href="#section7">7️⃣ 策略总结</a>
+        </div>
+        
+        <!-- Section 1: 市场情绪分析 -->
+        <div class="card" id="section1">
+            <div class="card-header">
+                <span class="icon">1️⃣</span>
+                <h2>市场情绪分析</h2>
+            </div>
+            
+            <div class="market-grid">
+                <div class="market-item">
+                    <div class="label">上证指数</div>
+                    <div class="value down">3889.08<br><small>-1.09%</small></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">深证成指</div>
+                    <div class="value down">13606.44<br><small>-1.41%</small></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">创业板指</div>
+                    <div class="value down">3272.49<br><small>-1.34%</small></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">涨停家数</div>
+                    <div class="value">51 只<span class="status-badge yellow">偏弱</span></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">炸板家数</div>
+                    <div class="value">28 只<span class="status-badge orange">较多</span></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">封板率</div>
+                    <div class="value">64.56%<span class="status-badge yellow">一般</span></div>
+                </div>
+                <div class="market-item">
+                    <div class="label">上涨/下跌</div>
+                    <div class="value down">916 / 4493</div>
+                </div>
+                <div class="market-item">
+                    <div class="label">成交额</div>
+                    <div class="value down">1.96 万亿<br><small>-2359 亿</small></div>
+                </div>
+            </div>
+            
+            <div class="quote-box">
+                <strong>情绪解读：</strong>市场处于区间防御状态。三大指数集体回调，沪指失守 3900 点，成交额萎缩至 1.96 万亿，较昨日缩量超 2300 亿。涨停家数 51 只，封板率 64.56%，显示资金观望情绪浓厚。中东局势升级导致避险情绪升温，国际油价拉升，黄金白银跳水，A 股午后集体跳水。
+            </div>
+        </div>
+        
+        <!-- Section 2: 涨停板块分布 -->
+        <div class="card" id="section2">
+            <div class="card-header">
+                <span class="icon">2️⃣</span>
+                <h2>涨停板块分布</h2>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72;">TOP5 板块</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>板块</th>
+                        <th>涨停家数</th>
+                        <th>驱动逻辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>🥇 1</td>
+                        <td>🔋 锂电池</td>
+                        <td>8+</td>
+                        <td>碳酸锂期货"三连阳"，供应扰动再现，库存三年新低</td>
+                    </tr>
+                    <tr>
+                        <td>🥈 2</td>
+                        <td>⚡ 电力</td>
+                        <td>6+</td>
+                        <td>华电能源 6 天 4 板，广西能源、晋控电力等跟涨</td>
+                    </tr>
+                    <tr>
+                        <td>🥉 3</td>
+                        <td>🚀 商业航天</td>
+                        <td>5+</td>
+                        <td>神剑股份、中超控股、西部材料等集体拉升</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>🏭 能源金属</td>
+                        <td>4+</td>
+                        <td>逆市走强，资金净流入 40.49 亿</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>🔬 化学制品</td>
+                        <td>3+</td>
+                        <td>环氧丙烷月内大涨超 50%，融资客抢筹</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="quote-box">
+                <strong>板块逻辑：</strong>锂电池方向碳酸锂期货连续上涨，供应端扰动 + 库存低位，产业链景气度有望回升。电力板块华电能源打出高度，防御属性凸显。商业航天产业催化密集，巨头冲刺上市，概念股持续活跃。
+            </div>
+        </div>
+        
+        <!-- Section 3: 连板个股梳理 -->
+        <div class="card" id="section3">
+            <div class="card-header">
+                <span class="icon">3️⃣</span>
+                <h2>连板个股梳理</h2>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72;">🏆 最高连板</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>连板数</th>
+                        <th>板块</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td><strong>华电能源</strong></td>
+                        <td>6 天 4 板</td>
+                        <td>电力</td>
+                        <td>市场最高标，13 天 8 板</td>
+                    </tr>
+                    <tr>
+                        <td>融捷股份</td>
+                        <td>3 连板</td>
+                        <td>锂电池</td>
+                        <td>锂矿龙头，受益碳酸锂涨价</td>
+                    </tr>
+                    <tr>
+                        <td>湖南发展</td>
+                        <td>3 连板</td>
+                        <td>电力</td>
+                        <td>跟随华电能源补涨</td>
+                    </tr>
+                    <tr>
+                        <td>新能泰山</td>
+                        <td>3 连板</td>
+                        <td>电力</td>
+                        <td>一字板，强势</td>
+                    </tr>
+                    <tr>
+                        <td>奥瑞德</td>
+                        <td>3 连板</td>
+                        <td>算力</td>
+                        <td>早盘竞价强势</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="quote-box">
+                <strong>连板分析：</strong>华电能源成为市场空间板，6 天 4 板走势，带动电力板块反复活跃。锂电池方向融捷股份 3 连板，显示资金对锂价反弹的认可。整体连板高度一般，市场缺乏明确主线。
+            </div>
+        </div>
+        
+        <!-- Section 4: 首板个股精选 -->
+        <div class="card" id="section4">
+            <div class="card-header">
+                <span class="icon">4️⃣</span>
+                <h2>首板个股精选</h2>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72;">🔋 锂电池</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>代码</th>
+                        <th>涨停时间</th>
+                        <th>逻辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>大东南</td>
+                        <td>002263</td>
+                        <td>早盘</td>
+                        <td>锂电池隔膜材料</td>
+                    </tr>
+                    <tr>
+                        <td>石大胜华</td>
+                        <td>603026</td>
+                        <td>盘中</td>
+                        <td>电解液溶剂龙头</td>
+                    </tr>
+                    <tr>
+                        <td>丽岛新材</td>
+                        <td>603937</td>
+                        <td>盘中</td>
+                        <td>电池铝箔</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72; margin-top: 25px;">⚡ 电力</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>代码</th>
+                        <th>涨停时间</th>
+                        <th>逻辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>广西能源</td>
+                        <td>600310</td>
+                        <td>早盘</td>
+                        <td>电力 + 新能源</td>
+                    </tr>
+                    <tr>
+                        <td>晋控电力</td>
+                        <td>000767</td>
+                        <td>盘中</td>
+                        <td>火电龙头</td>
+                    </tr>
+                    <tr>
+                        <td>深南电 A</td>
+                        <td>000037</td>
+                        <td>盘中</td>
+                        <td>电力 + 深圳</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72; margin-top: 25px;">🚀 商业航天</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>代码</th>
+                        <th>涨停时间</th>
+                        <th>逻辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>神剑股份</td>
+                        <td>002361</td>
+                        <td>早盘</td>
+                        <td>航天材料</td>
+                    </tr>
+                    <tr>
+                        <td>中超控股</td>
+                        <td>002471</td>
+                        <td>盘中</td>
+                        <td>航天电缆</td>
+                    </tr>
+                    <tr>
+                        <td>西部材料</td>
+                        <td>002149</td>
+                        <td>盘中</td>
+                        <td>航天材料 + 西部大开发</td>
+                    </tr>
+                    <tr>
+                        <td>再升科技</td>
+                        <td>603601</td>
+                        <td>盘中</td>
+                        <td>航天隔热材料</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Section 5: 明日关注方向 -->
+        <div class="card" id="section5">
+            <div class="card-header">
+                <span class="icon">5️⃣</span>
+                <h2>明日关注方向</h2>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72;">潜在延续板块</h3>
+            <div class="quote-box">
+                <ol style="margin: 10px 0 10px 20px;">
+                    <li><strong>🔋 锂电池</strong> - 碳酸锂期货持续走强，库存低位 + 供应扰动，景气度有望反转</li>
+                    <li><strong>⚡ 电力</strong> - 华电能源打开空间，防御属性 + 低估值，资金持续流入</li>
+                    <li><strong>🚀 商业航天</strong> - 产业催化密集，巨头冲刺上市，概念股或持续活跃</li>
+                </ol>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; color: #1e3c72; margin-top: 25px;">重点关注个股</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>股票</th>
+                        <th>关注理由</th>
+                        <th>风险点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td><strong>华电能源</strong></td>
+                        <td>市场空间板，电力龙头</td>
+                        <td>高位分歧风险</td>
+                    </tr>
+                    <tr>
+                        <td>融捷股份</td>
+                        <td>锂矿龙头，3 连板</td>
+                        <td>锂价波动</td>
+                    </tr>
+                    <tr>
+                        <td>神剑股份</td>
+                        <td>商业航天材料，首板</td>
+                        <td>板块持续性</td>
+                    </tr>
+                    <tr>
+                        <td>广西能源</td>
+                        <td>电力 + 新能源，跟风华电</td>
+                        <td>补涨空间有限</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Section 6: 风险提示 -->
+        <div class="card" id="section6">
+            <div class="card-header">
+                <span class="icon">6️⃣</span>
+                <h2>风险提示</h2>
+            </div>
+            
+            <div class="danger-box">
+                <strong>⚠️ 主要风险：</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li><strong>中东局势升级</strong> - 伊朗发动导弹打击，国际油价破百，市场避险情绪升温</li>
+                    <li><strong>成交额萎缩</strong> - 两市成交不足 2 万亿，资金观望情绪浓厚</li>
+                    <li><strong>封板率偏低</strong> - 64.56% 封板率，炸板股较多，接力情绪一般</li>
+                    <li><strong>指数调整</strong> - 三大指数跌逾 1%，沪指失守 3900 点，技术面转弱</li>
+                    <li><strong>黄金白银跳水</strong> - 避险资产回调，显示市场情绪复杂</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>📉 需谨慎板块：</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li><strong>光伏设备</strong> - 国晟科技跌停，板块调整</li>
+                    <li><strong>算力租赁</strong> - 电光科技跌停，资金流出</li>
+                    <li><strong>半导体</strong> - 净流出 85.30 亿，资金大幅撤离</li>
+                    <li><strong>通信设备</strong> - 资金净流出，板块走弱</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section 7: 明日策略总结 -->
+        <div class="card" id="section7">
+            <div class="card-header">
+                <span class="icon">7️⃣</span>
+                <h2>明日策略总结</h2>
+            </div>
+            
+            <div class="quote-box" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-left-color: #2196f3;">
+                <strong>📊 市场状态判断：</strong>区间防御模式 - 无明确主线，成交额萎缩，避险情绪升温
+            </div>
+            
+            <div class="do-avoid-grid" style="margin-top: 20px;">
+                <div class="do-box">
+                    <h3>✅ Do (建议操作)</h3>
+                    <ul>
+                        <li><strong>控制仓位</strong> - 建议仓位≤30%，等待市场企稳信号</li>
+                        <li><strong>关注锂电池</strong> - 碳酸锂涨价逻辑，融捷股份等龙头</li>
+                        <li><strong>防御配置</strong> - 电力板块低估值 + 高股息，华电能源等</li>
+                        <li><strong>等待时间窗口</strong> - 09:30 观察开盘承接，10:00 看 breadth 是否改善</li>
+                    </ul>
+                </div>
+                
+                <div class="avoid-box">
+                    <h3>❌ Avoid (避免操作)</h3>
+                    <ul>
+                        <li><strong>避免追高</strong> - 封板率偏低，炸板风险大</li>
+                        <li><strong>避免抄底弱势股</strong> - 光伏、算力租赁等资金流出板块</li>
+                        <li><strong>避免重仓博弈</strong> - 市场情绪偏弱，不宜激进</li>
+                        <li><strong>避免早盘冲动</strong> - 等待 09:30-10:00 确认市场方向</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 style="margin: 25px 0 15px; color: #1e3c72;">🕐 明日时间 Gate</h3>
+            <table class="time-gate-table">
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>关注点</th>
+                        <th>决策</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>09:00</strong></td>
+                        <td>政策消息</td>
+                        <td>LPR 报价，中东局势进展</td>
+                    </tr>
+                    <tr>
+                        <td><strong>09:25</strong></td>
+                        <td>集合竞价</td>
+                        <td>华电能源、融捷股份竞价强度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>09:30</strong></td>
+                        <td>开盘确认</td>
+                        <td>锂电池、电力板块承接</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10:00</strong></td>
+                        <td>breadth 验证</td>
+                        <td>上涨家数是否改善</td>
+                    </tr>
+                    <tr>
+                        <td><strong>14:00</strong></td>
+                        <td>午后决策</td>
+                        <td>是否持续调整或修复</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>⚠️ 免责声明：本文基于公开数据整理，仅供参考，不构成任何投资建议。据此操作，风险自担。</p>
+            <p style="margin-top: 10px;">📊 数据来源：东方财富网、财联社 | 🕐 生成时间：2026 年 3 月 26 日 21:00</p>
+            <p style="margin-top: 15px; font-size: 16px;"><strong>📈 核心观点：市场处于区间防御状态，建议控制仓位，关注锂电池 + 电力方向，等待市场企稳信号。</strong></p>
+        </div>
+    </div>
+</body>
+</html>
